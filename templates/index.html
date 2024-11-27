@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .movie {
+            margin: 10px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popular Movies</h1>
+
+    <!-- Form tìm kiếm -->
+    <form class="search-form" method="POST">
+        <input type="text" name="movie_name" placeholder="Search for a movie..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Hiển thị kết quả tìm kiếm -->
+    {% if search_result %}
+        <h2>Search Results:</h2>
+        <div>
+            {% for movie in search_result %}
+            <!-- <div class="movie">
+                <h3><a href="/movie/{{ movie.id }}">{{ movie.title }}</a></h3>
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <p>No Poster Available</p>
+                {% endif %}
+                <p>Release Date: {{ movie.release_date }}</p>
+                <p>Rating: {{ movie.vote_average }}</p>
+            </div> -->
+
+            <div class="movie">
+                <h3><a href="/movie/{{ movie.id }}">{{ movie.title }}</a></h3>
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <p>No Poster Available</p>
+                {% endif %}
+                <p>Release Date: {{ movie.release_date }}</p>
+                <p>Rating: {{ movie.vote_average }}</p>
+            </div>
+            
+            
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Hiển thị phim phổ biến -->
+    {% if movies %}
+        <h2>Popular Movies:</h2>
+        <div>
+            {% for movie in movies %}
+                <div class="movie">
+                    <h3><a href="/movie/{{ movie.id }}">{{ movie.title }}</a></h3>
+                    {% if movie.poster_path %}
+                        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+                    {% else %}
+                        <p>No Poster Available</p>
+                    {% endif %}
+                    <p>Release Date: {{ movie.release_date }}</p>
+                    <p>Rating: {{ movie.vote_average }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

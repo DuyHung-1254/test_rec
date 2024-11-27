@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .movie-details {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+        img {
+            width: 300px;
+            border-radius: 10px;
+        }
+        .button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="movie-details">
+        <h1>{{ movie.title }}</h1>
+        {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
+        {% else %}
+            <p>No Poster Available</p>
+        {% endif %}
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
+        <p><strong>Overview:</strong> {{ movie.overview }}</p>
+
+        <a href="/" class="button">Back</a>
+        <!-- Button để xem phim -->
+
+        <form method="POST" style="margin-top: 20px;">
+            <button type="submit" class="button">Watch Movie</button>
+        </form>
+        <!-- <a href="https://www.youtube.com/results?search_query={{ movie.title | replace(' ', '+') }} trailer" target="_blank" class="button">Watch Movie</a> -->
+    </div>
+</body>
+</html>
