@@ -182,6 +182,19 @@
             mask-image: linear-gradient(180deg, #fff 71.48%, rgba(255, 255, 255, 0.4) 100%);
             height: 400px;
         }
+        a {
+    text-decoration: none;
+}
+
+/* Phần Popular Movies */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
     </style>
 </head>
 <body>
@@ -198,18 +211,32 @@
         </ul>
     </div>
 
-    <div id="mainContent" class="content">
+    <!-- <div id="mainContent" class="content">
         <div>
             <div class="section-title">Popular Movies</div>
             <div class="movie-container">
                 {% for movie in popular_movie %}
                     <div class="movie-card">
+                        <a href="/movie/{{movie.movie_id}}" class="movie-card back-link"></a>
                         <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="movie-poster">
                         <div class="movie-title">{{ movie.title }}</div>
                     </div>
                 {% endfor %}
             </div>
         </div>
+    </div> -->
+
+    <div class="section-title">Popular Movies</div>
+    <div class="movie-container">
+        {% for movie in popular_movie %}
+            <div class="movie-card">
+                <!-- Đảm bảo rằng thẻ <a> bao quanh cả hình ảnh và tiêu đề -->
+                <a href="/movie/{{ movie.movie_id }}" class="movie-card">
+                    <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="movie-poster">
+                    <div class="movie-title">{{ movie.title }}</div>
+                </a>
+            </div>
+        {% endfor %}
     </div>
 
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
