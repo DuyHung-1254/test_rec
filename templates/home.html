@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, rgba(44, 66, 156, 0.3) 10%, rgba(0, 0, 0, 0) 100%);
+            padding: 20px;
+            margin: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .movie-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            gap: 20px;
+        }
+
+        .movie-card {
+            flex: 0 0 auto;
+            width: 200px;
+            text-align: center;
+            background: radial-gradient(circle, rgba(44, 66, 156, 0.3) 30%, rgba(0, 0, 0, 0) 80%);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .movie-poster {
+            width: 100%;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .movie-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 15px;
+            font-size: 36px;
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #6a11cb;
+            border: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            z-index: 999;
+            border-radius: 5px;
+        }
+
+        .openbtn:hover {
+            background-color: #2575fc;
+        }
+
+        .closebtn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            background-color: transparent;
+            border: none;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Overlay effect for sidebar */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+                font-size: 16px;
+            }
+
+            .movie-card {
+                width: 150px;
+            }
+        }
+
+        /* Hero section styles */
+        .hero-content-card-vlv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/8e8ff9d3-17b4-4ce1-b571-06ba4e025cca/web_tall_panel/VN-en-20241125-TRIFECTA-perspective_84d45caf-cba9-43fe-9f60-22143ec9ff81_large.jpg');
+            background-size: cover;
+            mask-image: linear-gradient(180deg, #fff 71.48%, rgba(255, 255, 255, 0.4) 100%);
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-content-card-vlv">
+        <button class="openbtn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <button class="closebtn" onclick="toggleSidebar()">×</button>
+        <ul>
+            {% for user in users %}
+                <li><a href="/movies/{{ user }}">User {{ user }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="mainContent" class="content">
+        <div>
+            <div class="section-title">Popular Movies</div>
+            <div class="movie-container">
+                {% for movie in popular_movie %}
+                    <div class="movie-card">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="movie-poster">
+                        <div class="movie-title">{{ movie.title }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            const overlay = document.getElementById("overlay");
+            const mainContent = document.getElementById("mainContent");
+            const openbtn = document.querySelector(".openbtn");
+            const closebtn = document.querySelector(".closebtn");
+
+            // Toggle sidebar visibility and content margin
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+                mainContent.style.marginLeft = "0";
+                openbtn.style.display = "inline-block";
+                closebtn.style.display = "none";
+                overlay.style.display = "none";
+            } else {
+                sidebar.style.left = "0";
+                mainContent.style.marginLeft = "250px";
+                openbtn.style.display = "none";
+                closebtn.style.display = "inline-block";
+                overlay.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
